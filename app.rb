@@ -10,7 +10,8 @@ class App < Sinatra::Application
   end
 
   get '/' do
-    erb :home, locals: { action:  @pi.on? ? 'off' : 'on'  }
+    action = @pi.on? ? 'off' : 'on'
+    erb :home, locals: { action:  action }
   end
 
   post '/on' do
