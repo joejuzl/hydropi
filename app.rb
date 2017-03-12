@@ -2,6 +2,8 @@ require 'sinatra'
 require_relative 'pi'
 
 class App < Sinatra::Application
+  set :bind, '0.0.0.0'
+
   def initialize
     super()
     @pi = Pi.new
