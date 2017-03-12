@@ -1,7 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    awesome_print (1.7.0)
     eventmachine (1.0.9)
     ffi (1.9.18)
     pi_piper (2.0.0)
@@ -20,7 +19,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  awesome_print
   pi_piper
   sinatra
 

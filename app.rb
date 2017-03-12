@@ -1,9 +1,6 @@
 require 'sinatra'
 require_relative 'pi'
 
-require 'ap'
-require 'pry-byebug'
-
 class App < Sinatra::Application
   def initialize
     super()
@@ -11,7 +8,7 @@ class App < Sinatra::Application
   end
 
   get '/' do
-    erb :home, :locals => {on:  @pi.on?}
+    erb :home, locals: { action:  @pi.on? ? 'off' : 'on'  }
   end
 
   post '/on' do
