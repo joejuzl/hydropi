@@ -1,3 +1,5 @@
+require 'pi_piper'
+
 class Pi
   def initialize
     @pin = PiPiper::Pin.new(:pin => 4, :direction => :out)
