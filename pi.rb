@@ -7,10 +7,11 @@ class Pi
   end
 
   def on?
-    @pin.on?
+    !off?
   end
 
   def off?
+    @pin.read
     @pin.off?
   end
 
