@@ -1,0 +1,6 @@
+<h1>Time</h1>
+<p>Status: <%= on ? 'On' : 'Off' %></p>
+
+<form action="/<%= on ? 'off' : 'on' %>" method="post">
+  <button type="submit"><%= on ? 'Off' : 'On' %></button>
+</form>
