@@ -1,5 +1,6 @@
 require 'sinatra'
 require_relative 'pi'
+require 'sinatra/reloader' if development?
 
 class App < Sinatra::Application
   set :bind, '0.0.0.0'

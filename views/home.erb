@@ -1,5 +1,19 @@
-<h1>HydroPi</h1>
+<html>
+<head>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="cron/jquery-cron.js"></script>-->
+  <!--<link type="text/css" href="cron/jquery-cron.css" rel="stylesheet"/>-->
+</head>
+<body>
+  <div class="center">
+    <form action="/<%= action %>" method="post">
+      <span onclick="$(this).closest('form').submit();" class="glyphicon glyphicon-globe globe <%= action %>"></span>
+    </form>
+  </div>
+</body>
+</html>
 
-<form action="/<%=action%>" method="post">
-  <button type="submit"><%=action%></button>
-</form>
