@@ -8,5 +8,4 @@ gem 'pi_piper'
 group :development do
   gem 'pry-byebug'
   gem 'awesome_print'
-  gem 'rerun'
 end
