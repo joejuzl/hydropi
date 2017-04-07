@@ -1,19 +1,43 @@
 <html>
 <head>
-  <link rel="stylesheet" href="styles/main.css">
+  <script src="https://unpkg.com/vue"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="styles/main.css">
   <!--<script type="text/javascript" src="cron/jquery-cron.js"></script>-->
   <!--<link type="text/css" href="cron/jquery-cron.css" rel="stylesheet"/>-->
 </head>
 <body>
-  <div class="center">
-    <form action="/<%= action %>" method="post">
-      <span onclick="$(this).closest('form').submit();" class="glyphicon glyphicon-globe globe <%= action %>"></span>
-    </form>
+<div class="center">
+  <div id="app">
+    <span v-on:click="click" v-bind:class="{ on: isOn }" class="glyphicon glyphicon-globe globe"></span>
   </div>
+
+
+</div>
 </body>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      isOn: false
+    },
+    methods: {
+      click: function () {
+        const self = this;
+        const action = this.isOn ? 'off' : 'on';
+        fetch('tap/' + action, {method: 'POST'}).then(function () {
+          fetch('tap/').then(function (response) {
+            response.json().then(function (data) {
+              self.isOn = data.on;
+            });
+          });
+        });
+      }
+    }
+  })
+</script>
 </html>
 

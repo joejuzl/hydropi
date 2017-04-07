@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'pi_piper'
 
-class Pi
+class Tap
   def initialize
     off
   end
@@ -26,9 +26,8 @@ class Pi
   private
 
   def pin
-    @pin ||= Sinatra::Base.development? ? MockPin.new : PiPiper::Pin.new(:pin => 4, :direction => :out)
+    @pin ||= Sinatra::Base.development? ? MockPin.new : PiPiper::Pin.new(pin: 4, direction: :out)
   end
-
 end
 
 class MockPin
@@ -49,5 +48,9 @@ class MockPin
 
   def off?
     !@on
+  end
+
+  def on?
+    !off?
   end
 end
