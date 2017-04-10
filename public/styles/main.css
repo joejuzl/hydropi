@@ -25,12 +25,21 @@ body {
   clip-path: circle(90px at center);
   transition: all 3s ease;
   background-position: -100% -100%;
-
 }
 
 .on {
   color: #2993C4;
   background-position: 100% 100%;
+}
+
+.arrow {
+  cursor: pointer;
+  font-size: 30px !important;
+  transition: all 1s ease;
+}
+
+.synced {
+  color: #2993C4;
 }
 
 .cron {

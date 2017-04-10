@@ -12,28 +12,31 @@
 <body>
 <div id="app">
   <div>
-    <input class="cron"  v-model="schedule"/>
+    <input class="cron" v-model="schedule" />&nbsp;
+    <i v-bind:class="{ synced: synced }" v-on:click="setSchedule" class="fa fa-arrow-right arrow"></i>
   </div>
   <div>
-    <div class="schedule">{{ schedule | schedule }}</div>
+    <div class="schedule">{{ schedule | human }}</div>
     <div class="next">next: {{ schedule | next }}</div>
   </div>
   <div>
-    <i v-on:click="click" v-bind:class="{ on: isOn }" class="fa fa-globe fa-6 globe" aria-hidden="true"></i>
+    <i v-on:click="turnOn" v-bind:class="{ on: isOn }" class="fa fa-globe globe" aria-hidden="true"></i>
   </div>
 </div>
-
-
 </body>
 <script>
   var app = new Vue({
     el: '#app',
     data: {
       isOn: false,
-      schedule: '* * * * *'
+      schedule: '',
+      synced: false
+    },
+    created: function() {
+      this.getSchedule();
     },
     methods: {
-      click: function () {
+      turnOn: function () {
         const self = this;
         const action = this.isOn ? 'off' : 'on';
         fetch('tap/' + action, {method: 'POST'}).then(function () {
@@ -43,10 +46,33 @@
             });
           });
         });
+      },
+      setSchedule: function () {
+        const self = this;
+        fetch('tap/schedule', {method: 'POST', body: JSON.stringify({
+          cron: self.schedule
+        })}).then(function (response) {
+          self.getSchedule();
+        });
+      },
+      getSchedule: function() {
+        const self = this;
+        fetch('tap/schedule').then(function(response){
+          response.json().then(function (data) {
+            self.schedule = data.cron;
+            self.synced = true;
+          });
+        })
+      }
+    },
+    watch: {
+      schedule:  function () {
+        const self = this;
+        self.synced = false;
       }
     },
     filters: {
-      schedule: function(text) {
+      human: function(text) {
         return prettyCron.toString(text).toLowerCase();
       },
       next: function(text) {
@@ -54,8 +80,6 @@
       }
     }
   });
-
-
 </script>
 </html>
 

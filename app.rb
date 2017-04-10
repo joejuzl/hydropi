@@ -1,15 +1,20 @@
 require 'sinatra'
-require_relative 'tap'
+require 'sinatra/base'
 require 'sinatra/reloader' if development?
 require 'sinatra/namespace'
 require 'sinatra/json'
+require 'pry-byebug'
 
-class App < Sinatra::Application
-  set :bind, '0.0.0.0'
+require_relative 'lib/tap'
+require_relative 'lib/schedule'
+
+class App < Sinatra::Base
+  register Sinatra::Namespace
 
   def initialize
     super()
     @tap = Tap.new
+    @schedule = Schedule.new
   end
 
   get '/' do
@@ -30,7 +35,17 @@ class App < Sinatra::Application
       @tap.off
       json message: 'success'
     end
+
+    get '/schedule' do
+      json cron: @schedule.cron
+    end
+
+    post '/schedule' do
+      body = JSON.parse(request.body.read).symbolize_keys
+      @schedule.cron = body[:cron]
+    end
   end
 end
 
+App.set :bind, '0.0.0.0'
 App.run!
