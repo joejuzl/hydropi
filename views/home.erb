@@ -1,28 +1,36 @@
-<html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
   <script src="https://unpkg.com/vue"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="styles/main.css">
-  <!--<script type="text/javascript" src="cron/jquery-cron.js"></script>-->
-  <!--<link type="text/css" href="cron/jquery-cron.css" rel="stylesheet"/>-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+  <script type="text/javascript" src="javascripts/later.min.js"></script>
+  <script type="text/javascript" src="javascripts/moment.min.js"></script>
+  <script type="text/javascript" src="javascripts/prettycron.js"></script>
 </head>
 <body>
-<div class="center">
-  <div id="app">
-    <span v-on:click="click" v-bind:class="{ on: isOn }" class="glyphicon glyphicon-globe globe"></span>
+<div id="app">
+  <div>
+    <input class="cron"  v-model="schedule"/>
   </div>
-
-
+  <div>
+    <div class="schedule">{{ schedule | schedule }}</div>
+    <div class="next">next: {{ schedule | next }}</div>
+  </div>
+  <div>
+    <i v-on:click="click" v-bind:class="{ on: isOn }" class="fa fa-globe fa-6 globe" aria-hidden="true"></i>
+  </div>
 </div>
+
+
 </body>
 <script>
   var app = new Vue({
     el: '#app',
     data: {
-      isOn: false
+      isOn: false,
+      schedule: '* * * * *'
     },
     methods: {
       click: function () {
@@ -36,8 +44,18 @@
           });
         });
       }
+    },
+    filters: {
+      schedule: function(text) {
+        return prettyCron.toString(text).toLowerCase();
+      },
+      next: function(text) {
+        return prettyCron.getNext(text).toLowerCase();
+      }
     }
-  })
+  });
+
+
 </script>
 </html>
 
